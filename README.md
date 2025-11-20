@@ -31,7 +31,7 @@ cd pr-reviewer-service
 
 # Запустите сервис
 docker-compose up --build
-
+```
 
 
 API Endpoints
