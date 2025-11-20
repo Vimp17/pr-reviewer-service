@@ -14,7 +14,7 @@
 
 ## Технологии
 
-- **Go ** - основной язык программирования
+- **Go** - основной язык программирования
 - **Gin** - веб-фреймворк
 - **PostgreSQL** - база данных
 - **Docker** - контейнеризация
@@ -26,7 +26,7 @@
 
 ```bash
 # Клонируйте репозиторий
-git clone <your-repo-url>
+git clone https://github.com/Vimp17/pr-reviewer-service.git
 cd pr-reviewer-service
 
 # Запустите сервис
