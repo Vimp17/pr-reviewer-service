@@ -34,32 +34,42 @@ docker-compose up --build
 ```
 
 
-API Endpoints
-Команды
-POST /team/add - Создать команду
+## API Endpoints
 
-GET /team/get?team_name=name - Получить информацию о команде
+### Команды (Teams)
 
-Пользователи
-POST /users/setIsActive - Изменить активность пользователя
+| Метод | Endpoint | Описание |
+|-------|----------|-----------|
+| `POST` | `/team/add` | Создать новую команду с участниками |
+| `GET` | `/team/get?team_name={name}` | Получить информацию о команде |
 
-GET /users/getReview?user_id=id - Получить PR для ревьювера
+### Пользователи (Users)
 
-Pull Requests
-POST /pullRequest/create - Создать PR
+| Метод | Endpoint | Описание |
+|-------|----------|-----------|
+| `POST` | `/users/setIsActive` | Изменить статус активности пользователя |
+| `GET` | `/users/getReview?user_id={id}` | Получить список PR для ревьювера |
 
-POST /pullRequest/merge - Слить PR
+### Pull Requests
 
-POST /pullRequest/reassign - Перераспределить ревьювера
+| Метод | Endpoint | Описание |
+|-------|----------|-----------|
+| `POST` | `/pullRequest/create` | Создать новый Pull Request |
+| `POST` | `/pullRequest/merge` | Отметить PR как слитый |
+| `POST` | `/pullRequest/reassign` | Перераспределить ревьювера |
 
-Системные
-GET /health - Проверка здоровья
+### Системные (System)
 
-GET /stats - Статистика назначений
+| Метод | Endpoint | Описание |
+|-------|----------|-----------|
+| `GET` | `/health` | Проверка работоспособности сервиса |
+| `GET` | `/stats` | Статистика по назначениям ревьюверов |
 
-Примеры использования
-Создание команды
-bash
+## Примеры использования
+
+### Создание команды
+
+```bash
 curl -X POST http://localhost:8080/team/add \
   -H "Content-Type: application/json" \
   -d '{
@@ -77,47 +87,3 @@ curl -X POST http://localhost:8080/team/add \
       }
     ]
   }'
-Создание PR
-bash
-curl -X POST http://localhost:8080/pullRequest/create \
-  -H "Content-Type: application/json" \
-  -d '{
-    "pull_request_id": "pr-1",
-    "pull_request_name": "Add new feature",
-    "author_id": "1"
-  }'
-Получение статистики
-bash
-curl http://localhost:8080/stats
-Структура проекта
-text
-pr-reviewer-service/
-├── cmd/
-│   └── pr-reviewer/
-│       └── main.go                 # Точка входа
-├── internal/
-│   ├── handlers/                   # HTTP обработчики
-│   │   ├── handlers.go
-│   │   ├── team_handlers.go
-│   │   ├── user_handlers.go
-│   │   └── pr_handlers.go
-│   ├── models/                     # Модели данных
-│   │   └── models.go
-│   ├── services/                   # Бизнес-логика
-│   │   ├── team_service.go
-│   │   ├── user_service.go
-│   │   └── pr_service.go
-│   └── storage/                    # Работа с БД
-│       ├── postgres/
-│       │   ├── storage.go
-│       │   ├── team_storage.go
-│       │   ├── user_storage.go
-│       │   └── pr_storage.go
-├── migrations/                     # Миграции БД
-│   ├── 000001_init_schema.up.sql
-│   ├── 000002_create_users_table.up.sql
-│   └── 000003_create_pull_requests_table.up.sql
-├── config/                        # Конфигурация
-├── Dockerfile
-├── docker-compose.yml
-└── README.md
